@@ -57,6 +57,7 @@ public class signupsREST {
 	public HashMap<String, String> createaccount(HashMap<String, String> postData) {
 		HashMap<String, String> reply = new HashMap<String, String>();
 		try {
+			
 			String studentID = postData.get("idNumber");
 			String studentName = postData.get("name");
 			String subjCode = postData.get("subject");
@@ -69,7 +70,7 @@ public class signupsREST {
 			newStudent.setStudentID(Integer.parseInt(studentID));
 			newStudent.setStudentName(studentName);
 			newStudent.setSection(section);
-			newStudent.setPassword(password);
+			newStudent.setPassword(password.toString());
 			newStudent.setBatchNumber(batchNumber);
 			newStudent.setClassID(subjCode);
 			studRep.save(newStudent);
