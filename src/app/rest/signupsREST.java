@@ -111,7 +111,7 @@ public class signupsREST {
 			String password = postData.get("timeSlots");
 	
 			
-			List <Student> student = studRep.findByStudentIdAndPassword(Integer.parseInt(idNumber), password);
+			Student student = studRep.findByPasswordAndStudentID(password,Integer.parseInt(idNumber));
 			
 			if (student != null) {
 				reply.put("message" ,"success!");
