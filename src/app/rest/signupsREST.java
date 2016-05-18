@@ -100,6 +100,35 @@ public class signupsREST {
 	}
 	
 	@POST
+	@Path("/login")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public HashMap<String, String> login (HashMap<String, String> postData) {
+		
+		try {
+			HashMap<String, String> reply = new HashMap<String, String>();
+			String idNumber = postData.get("subjCode");
+			String password = postData.get("timeSlots");
+	
+			
+			List <Student> student = studRep.findByStudentIdAndPassword(Integer.parseInt(idNumber), password);
+			
+			if (student != null) {
+				reply.put("message" ,"success!");
+			} 
+			else {
+				reply.put("message", "none");
+			}
+			return reply;
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw e;
+		}
+		
+	}
+	
+	@POST
 	@Path("/enlist")
 	//@Produces(MediaType.APPLICATION_JSON)
 	public HashMap<String, String> enlist(HashMap<String, String> postData) {

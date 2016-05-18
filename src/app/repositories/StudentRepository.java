@@ -10,5 +10,6 @@ import app.entities.Student;
 @Repository
 public interface StudentRepository extends JpaRepository <Student, Long>
 {
-	//public List<Student> findByName(String s);
+	//Student findByStudentIdAndPassword(Integer studentid, String password);
+	Student findByPasswordAndStudentid(String password, int studentId);
 }
