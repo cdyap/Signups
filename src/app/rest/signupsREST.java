@@ -17,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import app.entities.OralTimeSlot;
 import app.entities.Professor;
 import app.entities.Student;
 import app.entities.TimeSlot;
@@ -199,22 +200,23 @@ public class signupsREST {
 		String dateinput = postData.get("date");
 		String idNumber = postData.get("idNumber");
 		String starttime = postData.get("timeslotCode");
-		String slotNumber = postData.get("SlotNumber");
+		String slotNumber = postData.get("slotNumber");
 		
 		Student student = studRep.findByStudentID(Integer.parseInt(idNumber));
-		TimeSlot tm = new TimeSlot();
+		OralTimeSlot ots = new OralTimeSlot();
 		
 		if (oralRep.findByName(starttime) != null)
 		{
 			try {
-				String[] parts = slotNumber.split("-");
+				String[] parts = starttime.split("-");
 				
-				String Number = parts[0] + "-" + parts[1];
+				String Number = parts[0];
+				
 				
 				//HashMap<String, String> reply = new HashMap<String, String>();
-				TimeSlot pm = timeRep.findOne(Long.parseLong(Number));
-				
-				timeRep.save(tm);
+				TimeSlot tm = timeRep.findOne(Long.parseLong(Number));
+				ots.setTimeS(tm);
+				oralRep.save(ots);
 				reply.put("message", "success!");
 				
 				} catch (Exception e) {

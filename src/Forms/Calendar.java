@@ -275,7 +275,7 @@ public class Calendar extends javax.swing.JFrame {
     	
 		HashMap<String, Object> map = new HashMap<String, Object>();
 		map.put("slotNumber", slotNumber.getText());
-		
+		map.put("idNumber", this.idNumber);
 		ObjectMapper mapper = new ObjectMapper();
 		String json1 = mapper.writeValueAsString(map);
 		
@@ -286,6 +286,7 @@ public class Calendar extends javax.swing.JFrame {
 		HashMap<String,String> replyMap = mapper.readValue(reply, HashMap.class);
 		
 		String out = replyMap.get("message");
+		System.out.println(out);
     }//GEN-LAST:event_okActionPerformed
 
     /**

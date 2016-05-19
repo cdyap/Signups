@@ -8,7 +8,7 @@ import app.entities.OralTimeSlot;
 import app.entities.TimeSlot;
 
 @Repository
-public interface OralTimeRepository extends JpaRepository <OralTimeRepository, Long> {
+public interface OralTimeRepository extends JpaRepository <OralTimeSlot, Long> {
 	
 	//@Query("SELECT * from oraltimeslot WHERE name = ?1")
 	OralTimeSlot findByName(String name);
