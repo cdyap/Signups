@@ -20,6 +20,7 @@ import org.springframework.stereotype.Component;
 import app.entities.Professor;
 import app.entities.Student;
 import app.entities.TimeSlot;
+import app.repositories.OralTimeRepository;
 import app.repositories.ProfessorRepository;
 import app.repositories.StudentRepository;
 import app.repositories.TimeSlotRepository;
@@ -37,6 +38,9 @@ public class signupsREST {
 	
 	@Autowired
 	private TimeSlotRepository timeRep;
+	
+	@Autowired
+	private OralTimeRepository oralRep;
 	
 	@POST
 	@Path("/createsubject")
@@ -189,36 +193,45 @@ public class signupsREST {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public HashMap<String, String> enlist(HashMap<String, String> postData) {
+		
 	try {
 		HashMap<String, String> reply = new HashMap<String, String>();
 		String dateinput = postData.get("date");
 		String idNumber = postData.get("idNumber");
 		String starttime = postData.get("timeslotCode");
+		String slotNumber = postData.get("SlotNumber");
 		
 		Student student = studRep.findByStudentID(Integer.parseInt(idNumber));
 		TimeSlot tm = new TimeSlot();
 		
-		try {
-
-			//tm.setClassID(student.getClassID().toString());
+		if (oralRep.findByName(starttime) != null)
+		{
+			try {
+				String[] parts = slotNumber.split("-");
+				
+				String Number = parts[0] + "-" + parts[1];
+				
+				//HashMap<String, String> reply = new HashMap<String, String>();
+				TimeSlot pm = timeRep.findOne(Long.parseLong(Number));
+				
+				timeRep.save(tm);
+				reply.put("message", "success!");
+				
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					throw e;
+					//reply.put("message", d.toString());
+				}
 			
-			timeRep.save(tm);
-			reply.put("message", "success!");
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			//reply.put("message", d.toString());
+		} return reply;
+		
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				throw e;
+			}
 		}
-		
-		
-		
-		return reply;
-	} catch (Exception e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-		throw e;
 	}
-	}
-}
 
 
