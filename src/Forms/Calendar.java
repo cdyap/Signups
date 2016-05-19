@@ -5,6 +5,7 @@ import java.util.HashMap;
 
 import javax.swing.JTextField;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import app.rest.NetUtil;
@@ -232,7 +233,12 @@ public class Calendar extends javax.swing.JFrame {
         jButton2.setBorderPainted(false);
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                try {
+					jButton2ActionPerformed(evt);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -248,7 +254,12 @@ public class Calendar extends javax.swing.JFrame {
         jButton3.setBorderPainted(false);
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                try {
+					jButton3ActionPerformed(evt);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -280,7 +291,12 @@ public class Calendar extends javax.swing.JFrame {
         jButton5.setBorderPainted(false);
         jButton5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton5ActionPerformed(evt);
+                try {
+					jButton5ActionPerformed(evt);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -300,7 +316,12 @@ public class Calendar extends javax.swing.JFrame {
         jButton6.setBorderPainted(false);
         jButton6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton6ActionPerformed(evt);
+                try {
+					jButton6ActionPerformed(evt);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -623,6 +644,9 @@ public class Calendar extends javax.swing.JFrame {
     	HashMap<String, Object> map = new HashMap<String, Object>();
     	
     	map.put("slot1", calendar.getDate());
+    	map.put("idNumber",jTextField1.getText());
+    	map.put("startTime", "7:00am");
+    	map.put("endTime", "7:10am");
     	
     	ObjectMapper mapper = new ObjectMapper();
     	String json1 = mapper.writeValueAsString(map);
@@ -634,23 +658,92 @@ public class Calendar extends javax.swing.JFrame {
 		HashMap<String, String> replyMap = mapper.readValue(reply, HashMap.class);
 		String out = replyMap.get("message");
     	
-    	jTextField1.setText("hi");
+		System.out.println(calendar.getDate());
+    	//jTextField1.setText("hi");
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) throws Exception {//GEN-FIRST:event_jButton2ActionPerformed
+    	String url1 = "http://localhost:9999/signups/enlist";
+    	HashMap<String, Object> map = new HashMap<String, Object>();
+    	
+    	map.put("slot2", calendar.getDate());
+    	map.put("idNumber",jTextField2.getText());
+    	map.put("startTime", "7:10am;");
+    	map.put("endTime", "7:20am;");
+    	
+    	
+    	ObjectMapper mapper = new ObjectMapper();
+    	String json1 = mapper.writeValueAsString(map);
+    	
+    	System.out.println(json1);
+		System.out.println(url1);
+		String reply = NetUtil.postJsonDataToUrl(url1, json1);
+		
+		HashMap<String, String> replyMap = mapper.readValue(reply, HashMap.class);
+		String out = replyMap.get("message");
     }//GEN-LAST:event_jButton2ActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        // TODO add your handling code here:
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) throws Exception {//GEN-FIRST:event_jButton3ActionPerformed
+    	String url1 = "http://localhost:9999/signups/enlist";
+    	HashMap<String, Object> map = new HashMap<String, Object>();
+    	
+    	map.put("slot3", calendar.getDate());
+    	map.put("idNumber",jTextField3.getText());
+    	map.put("startTime", "7:20am;");
+    	map.put("endTime", "7:30am;");
+    	
+    	
+    	ObjectMapper mapper = new ObjectMapper();
+    	String json1 = mapper.writeValueAsString(map);
+    	
+    	System.out.println(json1);
+		System.out.println(url1);
+		String reply = NetUtil.postJsonDataToUrl(url1, json1);
+		
+		HashMap<String, String> replyMap = mapper.readValue(reply, HashMap.class);
+		String out = replyMap.get("message");
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
-        // TODO add your handling code here:
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) throws Exception {//GEN-FIRST:event_jButton6ActionPerformed
+    	String url1 = "http://localhost:9999/signups/enlist";
+    	HashMap<String, Object> map = new HashMap<String, Object>();
+    	
+    	map.put("slot6", calendar.getDate());
+    	map.put("idNumber",jTextField6.getText());
+    	map.put("startTime", "7:50am;");
+    	map.put("endTime", "8:00;");
+    	
+    	
+    	ObjectMapper mapper = new ObjectMapper();
+    	String json1 = mapper.writeValueAsString(map);
+    	
+    	System.out.println(json1);
+		System.out.println(url1);
+		String reply = NetUtil.postJsonDataToUrl(url1, json1);
+		
+		HashMap<String, String> replyMap = mapper.readValue(reply, HashMap.class);
+		String out = replyMap.get("message");
     }//GEN-LAST:event_jButton6ActionPerformed
 
-    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) throws Exception {//GEN-FIRST:event_jButton5ActionPerformed
+    	String url1 = "http://localhost:9999/signups/enlist";
+    	HashMap<String, Object> map = new HashMap<String, Object>();
+    	
+    	map.put("slot5", calendar.getDate());
+    	map.put("idNumber",jTextField5.getText());
+    	map.put("startTime", "7:40am;");
+    	map.put("endTime", "7:50am;");
+    	
+    	
+    	ObjectMapper mapper = new ObjectMapper();
+    	String json1 = mapper.writeValueAsString(map);
+    	
+    	System.out.println(json1);
+		System.out.println(url1);
+		String reply = NetUtil.postJsonDataToUrl(url1, json1);
+		
+		HashMap<String, String> replyMap = mapper.readValue(reply, HashMap.class);
+		String out = replyMap.get("message");
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
