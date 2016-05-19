@@ -20,24 +20,22 @@ public class Calendar extends javax.swing.JFrame {
      */
 	public String idNumber;
 	public String classCode;
-	public String professor;
+	public String prof_name;
 	
+    public Calendar(String idNumber, String classCode, String prof_name) {
+    	this.idNumber = idNumber;
+        this.classCode = classCode;
+        this.prof_name = prof_name;
+    	initComponents();
+        getContentPane().setBackground(Color.WHITE);
+        
+    }
+    
     public Calendar() {
         initComponents();
         getContentPane().setBackground(Color.WHITE);
     }
 
-    public void SetID(String id) {
-    	this.idNumber = id;
-    }
-    
-    public void SetClass(String classCode){
-    	this.classCode = classCode;
-    }
-    
-    public void SetProfessor(String professor) {
-    	this.professor = professor;
-    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -148,7 +146,7 @@ public class Calendar extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Verdana", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("IDNo.");
+        jLabel4.setText(idNumber);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -206,11 +204,11 @@ public class Calendar extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Verdana", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("ClassCode");
+        jLabel2.setText(classCode);
 
         jLabel3.setFont(new java.awt.Font("Verdana", 0, 14)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("PROFESSOR");
+        jLabel3.setText(prof_name);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -292,12 +290,13 @@ public class Calendar extends javax.swing.JFrame {
         }
         //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Calendar().setVisible(true);
-            }
-        });
+//        /* Create and display the form */
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                
+//                new Calendar().setVisible(true);
+//            }
+//        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

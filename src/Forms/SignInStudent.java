@@ -200,19 +200,23 @@ public class SignInStudent extends javax.swing.JFrame {
 				
 				LocalTime currentTime = LocalTime.now();
 				String studentId = replyMap.get("student_id");
+				String prof_name = replyMap.get("prof_name");
+				String subject = replyMap.get("subject");
 				if (currentTime.isBefore(LocalTime.NOON)) {
 					if (batchNumber == 1) {
 						this.setVisible(false);
 						this.dispose();
 						
-						StudentRepository studRep;
 						
 						
-						Calendar c = new Calendar();
-						c.SetID(studentId);
-						c.SetClass(classCode);
-						c.SetProfessor(professor);
-						new Calendar().setVisible(true);
+						
+						Calendar c = new Calendar(studentId, subject, prof_name);
+						
+						
+						System.out.println(studentId);
+						System.out.println(subject);
+						System.out.println(prof_name);
+						c.setVisible(true);
 						System.out.println("Yes");
 					}
 					else {
@@ -223,7 +227,17 @@ public class SignInStudent extends javax.swing.JFrame {
 					if (batchNumber == 2) {
 						this.setVisible(false);
 						this.dispose();
-						new Calendar().setVisible(true);
+						
+						
+						
+						
+						Calendar c = new Calendar(studentId, subject, prof_name);
+						
+						
+						System.out.println(studentId);
+						System.out.println(subject);
+						System.out.println(prof_name);
+						c.setVisible(true);
 						System.out.println("Yes");
 					}
 					else {

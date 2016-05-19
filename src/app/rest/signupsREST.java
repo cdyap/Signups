@@ -160,11 +160,15 @@ public class signupsREST {
 	
 			
 			Student student = studRep.findByPasswordAndStudentID(password,Integer.parseInt(idNumber));
+			Professor prof = student.getProf();
 			
+		
 			if (student != null) {
 				reply.put("message" ,"success!");
 				reply.put("batch", Integer.toString(student.getBatchNumber()));
-				reply.put("student_id", student.getId().toString());
+				reply.put("student_id", String.valueOf(student.getStudentID()));
+				reply.put("subject", prof.getSubject());
+				reply.put("prof_name", prof.getName());
 			} 
 			else {
 				reply.put("message", "none");
