@@ -1,11 +1,14 @@
 package app.rest;
 
 import java.io.Console;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
 import javax.ws.rs.Consumes;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -17,7 +20,6 @@ import org.springframework.stereotype.Component;
 import app.entities.Professor;
 import app.entities.Student;
 import app.entities.TimeSlot;
-import app.repositories.ClassesRepository;
 import app.repositories.ProfessorRepository;
 import app.repositories.StudentRepository;
 import app.repositories.TimeSlotRepository;
@@ -26,8 +28,6 @@ import app.repositories.TimeSlotRepository;
 @Path("/signups")
 public class signupsREST {
 	
-	@Autowired
-	private ClassesRepository classRep;
 
 	@Autowired
 	private ProfessorRepository profRep;
@@ -64,18 +64,30 @@ public class signupsREST {
 			String subjCode = postData.get("subject");
 			String section = postData.get("section");
 			String password = postData.get("password");
+			Long prof_id = Long.parseLong(postData.get("prof_id"));
+			
 			Random batch = new Random();
 			int batchNumber = batch.nextInt(2 - 1 + 1) + 1;
 			
-			Student newStudent = new Student();
-			newStudent.setStudentID(Integer.parseInt(studentID));
-			newStudent.setStudentName(studentName);
-			newStudent.setSection(section);
-			newStudent.setPassword(password.toString());
-			newStudent.setBatchNumber(batchNumber);
-			newStudent.setClassID(subjCode);
-			studRep.save(newStudent);
-			reply.put("message", batchNumber + studentName + " found!");
+			Professor prof = profRep.findOne(prof_id);
+			
+			if (prof != null) {
+				Student newStudent = new Student();
+				newStudent.setStudentID(Integer.parseInt(studentID));
+				newStudent.setStudentName(studentName);
+				newStudent.setSection(section);
+				newStudent.setPassword(password.toString());
+				newStudent.setBatchNumber(batchNumber);
+				newStudent.setClassID(subjCode);
+				newStudent.setProf(prof);
+				studRep.save(newStudent);
+				reply.put("message", studentName + " created under batch " + batchNumber + "!");
+			}
+			else {
+				reply.put("message", "fail!");
+			}
+			
+			
 			
 		//List <Student> student = studRep.findByName(studentID);
 			return reply;
@@ -86,6 +98,41 @@ public class signupsREST {
 		}		
 		
 	}
+	
+	@POST
+	@Path("/createprof")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public HashMap<String, String> createprof(HashMap<String, String> postData) {
+		HashMap<String, String> reply = new HashMap<String, String>();
+		try {
+			
+			
+			String name = postData.get("name");
+			String email = postData.get("email");
+			String classCode = postData.get("class");
+			String password = postData.get("password");
+			
+			Professor prof = new Professor();
+			
+			prof.setName(name);
+			prof.setEmail(email);
+			prof.setPassword(password);
+			prof.setSubject(classCode);
+			profRep.save(prof);
+			reply.put("message", "Success!");
+			reply.put("prof_id", profRep.findByName(name).getId().toString());
+			
+		//List <Student> student = studRep.findByName(studentID);
+			return reply;
+		} catch (Exception e) {
+		// TODO Auto-generated catch block
+			e.printStackTrace();
+			throw e;
+		}		
+		
+	}
+	
 	
 	@POST
 	@Path("/createtimeslots")
@@ -105,9 +152,9 @@ public class signupsREST {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public HashMap<String, String> login (HashMap<String, String> postData) {
-		HashMap<String, String> reply = new HashMap<String, String>();
+//		HashMap<String, String> reply = new HashMap<String, String>();
 		try {
-			
+			HashMap<String, String> reply = new HashMap<String, String>();
 			String idNumber = postData.get("idNumber");
 			String password = postData.get("password");
 	
@@ -116,6 +163,8 @@ public class signupsREST {
 			
 			if (student != null) {
 				reply.put("message" ,"success!");
+				reply.put("batch", Integer.toString(student.getBatchNumber()));
+				reply.put("student_id", student.getId().toString());
 			} 
 			else {
 				reply.put("message", "none");
@@ -130,18 +179,34 @@ public class signupsREST {
 		
 	}
 	
+	
 	@POST
 	@Path("/enlist")
-	//@Produces(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public HashMap<String, String> enlist(HashMap<String, String> postData) {
 	try {
-		String studentID = postData.get("studentID");
-		String subjCode = postData.get("subjCode");
-		String section = postData.get("section");
-		
-
 		HashMap<String, String> reply = new HashMap<String, String>();
-		//List <TimeSlot> professor = timeRep.findByName(timeSlots);
+		String dateinput = postData.get("date");
+		String idNumber = postData.get("idNumber");
+		String starttime = postData.get("timeslotCode");
+		
+		Student student = studRep.findByStudentID(Integer.parseInt(idNumber));
+		TimeSlot tm = new TimeSlot();
+		
+		try {
+
+			//tm.setClassID(student.getClassID().toString());
+			
+			timeRep.save(tm);
+			reply.put("message", "success!");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			//reply.put("message", d.toString());
+		}
+		
+		
 		
 		return reply;
 	} catch (Exception e) {

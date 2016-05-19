@@ -15,6 +15,7 @@ package Forms;
 
 import java.awt.Color;
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.HashMap;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -22,14 +23,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import app.repositories.StudentRepository;
 import app.rest.NetUtil;
 
-public class SignIn extends javax.swing.JFrame {
+public class SignInStudent extends javax.swing.JFrame {
 
     /**
      * Creates new form SignIn
      */
-    public SignIn() {
+    public SignInStudent() {
         initComponents();
     }
 
@@ -193,10 +195,42 @@ public class SignIn extends javax.swing.JFrame {
 			String message1 = replyMap.get("message");
 			System.out.println(message1);
 			if (message1.equals("success!")) {
-				this.setVisible(false);
-				this.dispose();
-				new Calendar().setVisible(true);
-				System.out.println("Yes");
+				String batch = replyMap.get("batch");
+				Integer batchNumber = Integer.parseInt(batch);
+				
+				LocalTime currentTime = LocalTime.now();
+				String studentId = replyMap.get("student_id");
+				if (currentTime.isBefore(LocalTime.NOON)) {
+					if (batchNumber == 1) {
+						this.setVisible(false);
+						this.dispose();
+						
+						StudentRepository studRep;
+						
+						
+						Calendar c = new Calendar();
+						c.SetID(studentId);
+						c.SetClass(classCode);
+						c.SetProfessor(professor);
+						new Calendar().setVisible(true);
+						System.out.println("Yes");
+					}
+					else {
+						jTextArea1.setText("Not yet your time to log in!");
+					}
+				}
+				else {
+					if (batchNumber == 2) {
+						this.setVisible(false);
+						this.dispose();
+						new Calendar().setVisible(true);
+						System.out.println("Yes");
+					}
+					else {
+						jTextArea1.setText("Not yet your time to log in!");
+					}
+				}
+				
 			}
 			else {
 				System.out.println("Why");
@@ -241,20 +275,20 @@ public class SignIn extends javax.swing.JFrame {
                 }
             }
         } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(SignIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignInStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(SignIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignInStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(SignIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignInStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(SignIn.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            java.util.logging.Logger.getLogger(SignInStudent.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new SignIn().setVisible(true);
+                new SignInStudent().setVisible(true);
             }
         });
     }

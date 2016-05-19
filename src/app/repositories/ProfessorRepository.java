@@ -9,5 +9,5 @@ import app.entities.Professor;
 @Repository
 public interface ProfessorRepository extends JpaRepository <Professor, Long>
 {
-	//public List<Professor> findByName(String p);
+	Professor findByName(String p);
 }

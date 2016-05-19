@@ -5,6 +5,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Student {
@@ -31,6 +33,10 @@ public class Student {
 	
 	@Column
 	private String password;
+
+	@ManyToOne
+	@JoinColumn(name="prof_id")
+	private Professor prof;
 	
 	public String getPassword () {
 		return password;
@@ -86,5 +92,13 @@ public class Student {
 
 	public void setBatchNumber(int batchNumber) {
 		this.batchNumber = batchNumber;
+	}
+
+	public Professor getProf() {
+		return prof;
+	}
+
+	public void setProf(Professor prof) {
+		this.prof = prof;
 	}
 }

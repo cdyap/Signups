@@ -1,6 +1,5 @@
 package app.entities;
 
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -17,15 +16,6 @@ public class TimeSlot {
 	private Long id;
 	
 	@Column
-	private int timeslotID;
-	
-	@Column
-	private int classID;
-	
-	@Column
-	private Date date;
-	
-	@Column
 	private String startTime;
 	
 	@Column
@@ -39,22 +29,7 @@ public class TimeSlot {
 		this.id = id;
 	}
 
-	public int getTimeslotID() {
-		return timeslotID;
-	}
-
-	public void setTimeslotID(int timeslotID) {
-		this.timeslotID = timeslotID;
-	}
-
-	public int getClassID() {
-		return classID;
-	}
-
-	public void setClassID(int classID) {
-		this.classID = classID;
-	}
-
+	
 	public String getStartTime() {
 		return startTime;
 	}
@@ -69,13 +44,5 @@ public class TimeSlot {
 
 	public void setEndTime(String endTime) {
 		this.endTime = endTime;
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
 	}
 }
