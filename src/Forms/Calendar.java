@@ -2,6 +2,12 @@ package Forms;
 
 
 import java.awt.Color;
+import java.util.HashMap;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+import app.rest.NetUtil;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -140,7 +146,12 @@ public class Calendar extends javax.swing.JFrame {
         ok.setText("Ok");
         ok.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                okActionPerformed(evt);
+                try {
+					okActionPerformed(evt);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 
@@ -259,8 +270,22 @@ public class Calendar extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void okActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_okActionPerformed
-        // TODO add your handling code here:
+    private void okActionPerformed(java.awt.event.ActionEvent evt) throws Exception {//GEN-FIRST:event_okActionPerformed
+    	String url1 = "http://localhost:9999/signups/enlist";
+    	
+		HashMap<String, Object> map = new HashMap<String, Object>();
+		map.put("slotNumber", slotNumber.getText());
+		
+		ObjectMapper mapper = new ObjectMapper();
+		String json1 = mapper.writeValueAsString(map);
+		
+		// SEND TO SERVICE
+		System.out.println(json1);
+		System.out.println(url1);
+		String reply = NetUtil.postJsonDataToUrl(url1, json1); //the reply from the server
+		HashMap<String,String> replyMap = mapper.readValue(reply, HashMap.class);
+		
+		String out = replyMap.get("message");
     }//GEN-LAST:event_okActionPerformed
 
     /**
