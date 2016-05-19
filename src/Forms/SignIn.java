@@ -191,9 +191,17 @@ public class SignIn extends javax.swing.JFrame {
 			HashMap<String,String> replyMap = (HashMap<String,String>) mapper.readValue(reply, HashMap.class);
 			
 			String message1 = replyMap.get("message");
-			String message2 = replyMap.get("cashier");
 			System.out.println(message1);
-			Calendar.getFrames();
+			if (message1.equals("success!")) {
+				this.setVisible(false);
+				this.dispose();
+				new Calendar().setVisible(true);
+				System.out.println("Yes");
+			}
+			else {
+				System.out.println("Why");
+			}
+			
 		} catch (JsonParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

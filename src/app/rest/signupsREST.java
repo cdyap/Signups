@@ -1,5 +1,6 @@
 package app.rest;
 
+import java.io.Console;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
@@ -104,11 +105,11 @@ public class signupsREST {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public HashMap<String, String> login (HashMap<String, String> postData) {
-		
+		HashMap<String, String> reply = new HashMap<String, String>();
 		try {
-			HashMap<String, String> reply = new HashMap<String, String>();
-			String idNumber = postData.get("subjCode");
-			String password = postData.get("timeSlots");
+			
+			String idNumber = postData.get("idNumber");
+			String password = postData.get("password");
 	
 			
 			Student student = studRep.findByPasswordAndStudentID(password,Integer.parseInt(idNumber));
@@ -119,8 +120,9 @@ public class signupsREST {
 			else {
 				reply.put("message", "none");
 			}
+			System.out.println(reply);
 			return reply;
-		} catch (NumberFormatException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			throw e;
@@ -132,15 +134,21 @@ public class signupsREST {
 	@Path("/enlist")
 	//@Produces(MediaType.APPLICATION_JSON)
 	public HashMap<String, String> enlist(HashMap<String, String> postData) {
-	String studentID = postData.get("studentID");
-	String subjCode = postData.get("subjCode");
-	String section = postData.get("section");
-	String timeSlots = postData.get("timeSlots");
+	try {
+		String studentID = postData.get("studentID");
+		String subjCode = postData.get("subjCode");
+		String section = postData.get("section");
+		
 
-	HashMap<String, String> reply = new HashMap<String, String>();
-	//List <TimeSlot> professor = timeRep.findByName(timeSlots);
-	
-	return reply;
+		HashMap<String, String> reply = new HashMap<String, String>();
+		//List <TimeSlot> professor = timeRep.findByName(timeSlots);
+		
+		return reply;
+	} catch (Exception e) {
+		// TODO Auto-generated catch block
+		e.printStackTrace();
+		throw e;
+	}
 	}
 }
 

@@ -11,7 +11,6 @@ import app.entities.Student;
 @Repository
 public interface StudentRepository extends JpaRepository <Student, Long>
 {
-	//Student findByStudentIdAndPassword(Integer studentid, String password);
-	//@Query("SELECT * FROM student where studentid = :studentId AND password LIKE (':password')") 
 	public Student findByPasswordAndStudentID(String password, int studentId);
+	public Student findByStudentID(int studentId);
 }
